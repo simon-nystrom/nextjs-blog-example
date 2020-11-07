@@ -1,13 +1,20 @@
-import posts from "../_posts";
+import styled from "styled-components"
+import posts from "../_posts"
+
+const Article = styled.article`
+  max-width: 56em;
+  padding: 0.8em;
+  margin: 0 auto;
+`
 
 // This post argument is passed from getStaticProps
 const BlogPost = ({ post }) => (
-  <article>
+  <Article>
     <h1>{post.title}</h1>
     <p>{post.date}</p>
-  </article>
-);
-export default BlogPost;
+  </Article>
+)
+export default BlogPost
 
 export async function getStaticPaths() {
   return {
@@ -16,7 +23,7 @@ export async function getStaticPaths() {
     // needs to contain a list of all the posts slugs
     paths: posts.map((post) => ({ params: { slug: post.slug } })),
     fallback: false,
-  };
+  }
 }
 
 export async function getStaticProps({ params }) {
@@ -27,5 +34,5 @@ export async function getStaticProps({ params }) {
       // this will be the post we need to render
       post: posts.find((post) => post.slug === params.slug),
     },
-  };
+  }
 }
