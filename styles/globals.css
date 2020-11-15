@@ -14,3 +14,10 @@ a {
 * {
   box-sizing: border-box;
 }
+
+pre {
+  color: white;
+  background: #282c34;
+  padding: 10px;
+  border-radius: 6px;
+}

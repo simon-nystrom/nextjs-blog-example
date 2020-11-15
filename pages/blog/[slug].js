@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import posts from "../_posts"
+import Head from "next/head"
 
 const Article = styled.article`
   max-width: 56em;
@@ -7,21 +8,22 @@ const Article = styled.article`
   margin: 0 auto;
 `
 
-// This post argument is passed from getStaticProps
 const BlogPost = ({ post }) => (
   <Article>
-    <h1>{post.title}</h1>
-    <p>{post.date}</p>
+    <Head><link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/atom-one-dark-reasonable.min.css"
+    /></Head>
+    <h1>{post.attributes.title}</h1>
+    <p>{post.attributes.date}</p>
+    <div className="blog-post-content" dangerouslySetInnerHTML={{ __html: post.html }}></div>
   </Article>
 )
 export default BlogPost
 
 export async function getStaticPaths() {
   return {
-    // Map all the posts to objects with the slug in the params object
-    // since we want all our pages to be accessible, the paths array
-    // needs to contain a list of all the posts slugs
-    paths: posts.map((post) => ({ params: { slug: post.slug } })),
+    paths: posts.map((post) => ({ params: { slug: post.attributes.slug } })),
     fallback: false,
   }
 }
@@ -29,10 +31,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   return {
     props: {
-      // Since our slug should be unique we can use
-      // it to find the post with the matching slug,
-      // this will be the post we need to render
-      post: posts.find((post) => post.slug === params.slug),
+      post: posts.find((post) => post.attributes.slug === params.slug),
     },
   }
 }

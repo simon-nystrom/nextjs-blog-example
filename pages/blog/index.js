@@ -26,30 +26,31 @@ const BlogLink = styled.div`
 
   &:hover {
     margin-left: 20px;
-  }
 `
 
 // Notice here on the Link element that we do not need passHref,
 // that's possible because the anchor tag is the direct child
 // of the Link element
-const BlogPage = ({ posts }) => (
-  <Main>
-    <Ul>
-      {posts.map((post) => (
-        <Li key={post.slug}>
-          <Link href={`blog/${post.slug}`}>
-            <a>
-              <BlogLink>
-                <h3>{post.title}</h3>
-                <h5>{post.date}</h5>
-              </BlogLink>
-            </a>
-          </Link>
-        </Li>
-      ))}
-    </Ul>
-  </Main>
-)
+const BlogPage = ({ posts }) => {
+  return (
+    <Main>
+      <Ul>
+        {posts.map((post) => (
+          <Li key={post.attributes.slug}>
+            <Link href={`blog/${post.attributes.slug}`}>
+              <a>
+                <BlogLink>
+                  <h3>{post.attributes.title}</h3>
+                  <h5>{post.attributes.date}</h5>
+                </BlogLink>
+              </a>
+            </Link>
+          </Li>
+        ))}
+      </Ul>
+    </Main>
+  )
+}
 
 export default BlogPage
 
